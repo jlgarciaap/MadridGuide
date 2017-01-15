@@ -1,4 +1,4 @@
-package es.styleapps.madridguide;
+package es.styleapps.madridguide.fragments;
 
 
 import android.os.Bundle;
@@ -12,6 +12,7 @@ import android.view.ViewGroup;
 import java.util.ArrayList;
 import java.util.List;
 
+import es.styleapps.madridguide.R;
 import es.styleapps.madridguide.adapter.ShopsAdapter;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;

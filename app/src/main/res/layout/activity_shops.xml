@@ -23,8 +23,8 @@
         android:id="@+id/activity_shops_fragment_shops"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:name="es.styleapps.madridguide.ShopsFragment"
-        android:layout_weight="2"/>
+        android:name="es.styleapps.madridguide.fragments.ShopsFragment"
+        android:layout_weight="1"/>
 
 
 </LinearLayout>

@@ -1,19 +1,22 @@
 package es.styleapps.madridguide.views;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
-import com.squareup.picasso.MemoryPolicy;
-import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import java.lang.ref.WeakReference;
 
-import butterknife.BindView;
-import butterknife.ButterKnife;
 import es.styleapps.madridguide.R;
 import es.styleapps.madridguide.model.Shop;
 
@@ -29,6 +32,7 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
 
 //    @BindView(R.id.row_shop_logo)
     ImageView logoImageView;
+    ImageView backgroundImageView;
 
     private WeakReference<Context> context;
 
@@ -42,6 +46,7 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
         context = new WeakReference<Context>(itemView.getContext());
         nameTextView = (TextView) itemView.findViewById(R.id.row_shop_name);
       logoImageView = (ImageView) itemView.findViewById(R.id.row_shop_logo);
+      backgroundImageView = (ImageView) itemView.findViewById(R.id.row_shop_background);
 
 
 
@@ -59,6 +64,29 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
         Picasso.with(context.get()).load(shop.getLogoImgUrl())
                 .placeholder(android.R.drawable.ic_dialog_email)
                 .into(logoImageView);
+
+        Picasso.with(context.get()).load(shop.getImageUrl())
+                .placeholder(android.R.drawable.ic_dialog_email)
+                .into(new Target() {
+                    @RequiresApi(api = Build.VERSION_CODES.JELLY_BEAN)
+                    @Override
+                    public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+                        backgroundImageView.setBackground(new BitmapDrawable(bitmap));
+
+                    }
+
+                    @Override
+                    public void onBitmapFailed(Drawable errorDrawable) {
+
+                    }
+
+                    @Override
+                    public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+                    }
+                });
+
+
 
     }
 

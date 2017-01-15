@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="shopsUrl">http://madrid-shops.com/json/getShops.php</string>
+    <string name="shopsUrl">http://madrid-shops.com/json_new/getActivities.php</string>
 </resources>

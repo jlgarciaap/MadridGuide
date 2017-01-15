@@ -25,11 +25,6 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
 
     private final LayoutInflater layoutInflater;
     private final Shops shops;
-//
-    //Esto lo hemos llevado fuera
-//    public interface OnElementClick<T>{
-//        public void elementClicked(T element, int position);
-//    }
 
     private OnElementClick<Shop> listener;
 
@@ -58,16 +53,13 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
 
         final Shop shop = shops.get(position);
 
+
         holder.setShop(shop);
 
         //Esto es como el contentView de las tablas en IOS
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                for (OnElementClick<Shop> listener:getListeners()){
-//                    listener.elementClicked(shop, position);
-//
-//                }
 
                 if(ShopsAdapter.this.listener != null){
                     listener.clickedOn(shop, position);
@@ -78,13 +70,7 @@ public class ShopsAdapter extends RecyclerView.Adapter<ShopRowViewHolder> {
         });
 
     }
-//
-//    public List<OnElementClick<Shop>> getListeners() {
-//        if (listeners == null){
-//            listeners = new LinkedList<>();
-//        }
-//        return listeners;
-//    }
+
 
     public void setOnElementClikListener(OnElementClick<Shop> listener){
 

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/activity_shop_detail"
@@ -9,7 +9,13 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     tools:context="es.styleapps.madridguide.activities.ShopDetailActivity">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1">
 
     <ImageView
         android:id="@+id/activity_shop_detail_logo_image"
@@ -25,4 +31,49 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"/>
 
-</RelativeLayout>
+    <TextView
+        android:id="@+id/description_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Descripcion"
+        android:layout_below="@+id/activity_shop_detail_logo_image"
+        android:scrollbars="vertical"
+        android:maxLines="1000"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/activity_shop_detail_description_text"
+        android:textSize="16sp"
+        tools:text="TEXT TEXT TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/description_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <TextView
+        android:id="@+id/address_label"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Direccion"
+        android:layout_below="@+id/activity_shop_detail_description_text"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+
+    <TextView
+        android:id="@+id/activity_shop_detail_address_text"
+        android:textSize="16sp"
+        tools:text="TEXT TEXT TEXT"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:layout_below="@+id/address_label"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    </RelativeLayout>
+    <fragment
+        android:id="@+id/map"
+        android:name="com.google.android.gms.maps.MapFragment"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_weight="1"/>
+
+</LinearLayout>

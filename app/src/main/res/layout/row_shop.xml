@@ -6,12 +6,20 @@
     android:layout_height="100dp"
     xmlns:tools="http://schemas.android.com/tools">
 
+    <ImageView
+        android:id="@+id/row_shop_background"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:alpha="0.5"/>
+
     <TextView
         android:id="@+id/row_shop_name"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:layout_centerVertical="true"
         android:gravity="center"
+        android:textSize="20sp"
+        android:textAppearance="@color/colorAccent"
         tools:text="Un saludito para mi mejor amiguito"/>
     <ImageView
         android:id="@+id/row_shop_logo"
@@ -19,6 +27,7 @@
         android:layout_height="80dp"
         android:layout_centerVertical="true"
         tools:src="@android:drawable/btn_plus"/>
+
 
 
 </RelativeLayout>

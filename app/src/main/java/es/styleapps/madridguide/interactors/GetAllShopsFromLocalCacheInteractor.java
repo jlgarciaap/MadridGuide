@@ -49,18 +49,3 @@ public class GetAllShopsFromLocalCacheInteractor {
 
 }
 
-class MainThread {
-
-    public static void run (final Runnable runnable){
-        Handler handler = new Handler(Looper.getMainLooper());//Lo pasamos al looper main
-        handler.post(new Runnable() {
-            @Override
-            public void run() {
-               runnable.run();
-            }
-        });
-
-    }
-
-
-}

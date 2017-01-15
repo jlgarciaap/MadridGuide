@@ -21,6 +21,10 @@ public class ShopEntityShopMapper {
             //detect current lang y segun como este uno u otro. Esto se hace en el mapper
             shop.setDescription(entity.getDescriptionEs());
             shop.setLogoImgUrl(entity.getLogoImg());
+            shop.setLatitude(entity.getLatitude());
+            shop.setLongitude(entity.getLongitude());
+            shop.setImageUrl(entity.getImg());
+            shop.setAddress(entity.getAddress());
             //..
 
             result.add(shop);
