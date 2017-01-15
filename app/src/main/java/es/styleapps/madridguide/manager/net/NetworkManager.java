@@ -5,12 +5,9 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Log;
 
-import com.android.volley.NetworkResponse;
-import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
-import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -27,8 +24,6 @@ import java.util.List;
 
 import es.styleapps.madridguide.R;
 
-import static android.R.attr.bitmap;
-
 /**
  * Created by jlgarciaap on 14/1/17.
  */
@@ -39,11 +34,6 @@ public class NetworkManager {
     public interface GetShopListener {
         public void getShopEntitiesSuccess(List<ShopEntity> result);
         public void getShopEntitiesDidFail();
-
-    }
-
-    public interface GetLogoListener {
-        public void getLogoSuccess();
 
     }
 
@@ -63,6 +53,7 @@ public class NetworkManager {
             @Override
             public void onResponse(String response) { //Si va bien sale esto
 
+                Log.d("JSON", response);
               List<ShopEntity> shopResponse = parseResponse(response);
                 //Usamos esto para devolver, ya que se produce en otro hilo o tarde mucho y si devolvemos
                 //en el mismo metodo devolveria siempre null antes de terminar
@@ -103,32 +94,6 @@ public class NetworkManager {
         return result;
     }
 
-
-
-    public static Bitmap getBitmapFromURL(String src) {
-
-        final Bitmap[] myBitmap = new Bitmap[1];
-
-        RequestQueue queue = Volley.newRequestQueue(context.get());
-
-        ImageRequest request = new ImageRequest(src, new Response.Listener<Bitmap>() {
-            @Override
-            public void onResponse(Bitmap response) {
-                myBitmap[0] = response;
-                return myBitmap[0];
-
-            }
-        }, 0, 0, null, null, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError error) {
-
-            }
-        });
-        queue.add(request);
-
-
-        return myBitmap[0];
-    }
 
 
 
