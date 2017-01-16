@@ -1,5 +1,6 @@
 package es.styleapps.madridguide.model.mappers;
 
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -25,6 +26,7 @@ public class ShopEntityShopMapper {
             shop.setLongitude(entity.getLongitude());
             shop.setImageUrl(entity.getImg());
             shop.setAddress(entity.getAddress());
+            shop.setDateInsert(System.currentTimeMillis());
             //..
 
             result.add(shop);

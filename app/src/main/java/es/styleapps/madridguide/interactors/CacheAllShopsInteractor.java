@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Looper;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 import es.styleapps.madridguide.manager.db.ShopDAO;
@@ -26,12 +27,17 @@ public class CacheAllShopsInteractor {
                 boolean success = true;
 
                 for (Shop shop: shops.allShops()) {
-                    boolean inDB = false;
 
+                    boolean inDB = false;
                     if (shopDatabase != null && !shopDatabase.isEmpty()){
                         for (Shop shopDB:shopDatabase) {
                             // comprobamos si la tienda ya esta en BD
-                            if (shop.getName().equalsIgnoreCase(shopDB.getName())){
+                           // if (shop.getName().equalsIgnoreCase(shopDB.getName())){
+                            if(shop.getId() == shopDB.getId() ||
+                                    (System.currentTimeMillis() - shopDB.getDateInsert() < 7)){
+
+                                //Realmente tendria que ser un update. Convertir en integer
+
                                 inDB = true;
                                 break;
                             }

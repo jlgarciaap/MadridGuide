@@ -1,6 +1,9 @@
 package es.styleapps.madridguide.model;
 
+import android.text.method.DateTimeKeyListener;
+
 import java.io.Serializable;
+import java.util.Date;
 
 /**
  * Created by jlgarciaap on 10/1/17.
@@ -16,6 +19,16 @@ public class Shop implements Serializable{
     private String description;
     private float latitude;
     private float longitude;
+    private long dateInsert;
+
+    public long getDateInsert() {
+        return dateInsert;
+    }
+
+    public Shop setDateInsert(long dateInsert) {
+        this.dateInsert = dateInsert;
+        return this;
+    }
 
     public Shop(long id, String name) {
         this.id = id;

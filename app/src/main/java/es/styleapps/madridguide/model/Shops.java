@@ -23,9 +23,6 @@ public class Shops implements IShopsIterable, IShopsUpdatable {
 
         }
 
-
-
-
         return shops;
     }
 

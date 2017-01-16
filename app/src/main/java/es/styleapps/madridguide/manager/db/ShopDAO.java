@@ -80,7 +80,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
 
         }
         //TODO Mapear aqui el ID
-       // contentValues.put(KEY_SHOP_ID, shop.getId());
+        contentValues.put(KEY_SHOP_ID, shop.getId());
         contentValues.put(KEY_SHOP_ADDRESS, shop.getAddress());
         contentValues.put(KEY_SHOP_DESCRIPTION, shop.getDescription());
         contentValues.put(KEY_SHOP_IMAGE_URL, shop.getImageUrl());
@@ -98,7 +98,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
 
         final Shop shop = new Shop(1,"");
 
-        //shop.setId(contentValues.getAsInteger(KEY_SHOP_ID));
+        shop.setId(contentValues.getAsInteger(KEY_SHOP_ID));
         shop.setName(contentValues.getAsString(KEY_SHOP_NAME));
         shop.setAddress(contentValues.getAsString(KEY_SHOP_ADDRESS));
         shop.setDescription(contentValues.getAsString(KEY_SHOP_DESCRIPTION));
@@ -161,6 +161,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
         long identifier = c.getLong(c.getColumnIndex(KEY_SHOP_ID));
         String name = c.getString(c.getColumnIndex(KEY_SHOP_NAME));
         Shop shop = new Shop(identifier, name);
+
 
         shop.setAddress(c.getString(c.getColumnIndex(KEY_SHOP_ADDRESS)));
         shop.setDescription(c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION)));
