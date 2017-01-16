@@ -8,6 +8,7 @@ import android.util.Log;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.google.gson.Gson;
@@ -34,6 +35,13 @@ public class NetworkManager {
     public interface GetShopListener {
         public void getShopEntitiesSuccess(List<ShopEntity> result);
         public void getShopEntitiesDidFail();
+
+    }
+
+    public interface GetLogoShopListener {
+        public void getLogoShopSuccess(Bitmap result);
+        public void getLogoShopDidFail();
+
 
     }
 
@@ -94,6 +102,32 @@ public class NetworkManager {
         return result;
     }
 
+    public void getBitmapFromShop(final String urlLogo,final GetLogoShopListener listener){
+
+        RequestQueue queue = Volley.newRequestQueue(context.get());
+        String url = urlLogo;
+
+        ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
+            @Override
+            public void onResponse(Bitmap response) {
+                if (listener !=  null){
+
+                    listener.getLogoShopSuccess(response);
+                }
+
+            }
+        }, 0, 0, null, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                if (listener != null){
+                    listener.getLogoShopDidFail();
+                }
+            }
+        });
+
+        queue.add(imageRequest);
+
+    }
 
 
 

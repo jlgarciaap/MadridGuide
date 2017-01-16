@@ -32,6 +32,7 @@ import es.styleapps.madridguide.R;
 import es.styleapps.madridguide.fragments.ShopsFragment;
 import es.styleapps.madridguide.interactors.GetAllShopsFromLocalCacheInteractor;
 import es.styleapps.madridguide.interactors.MainThread;
+import es.styleapps.madridguide.manager.net.NetworkManager;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
 import es.styleapps.madridguide.navigator.Navigator;
@@ -94,50 +95,70 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
         final Bitmap[] bitmapMap = new Bitmap[1];
         final MarkerOptions marker;
         shopList = shops.allShops();
+        NetworkManager networkManager = new NetworkManager(getApplicationContext());
+
         for (final Shop shop : shopList) {
 
-
-            Picasso.with(getApplicationContext()).load(shop.getLogoImgUrl()).into(new Target() {
-
-
-                    @Override
-                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-                    Log.v("ONBITMAPLOADED","Pasamos por BITMAP");
-                    bitmapMap[0] = bitmap;
-                    final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap,60,60,false));
+            networkManager.getBitmapFromShop(shop.getLogoImgUrl(), new NetworkManager.GetLogoShopListener() {
+                @Override
+                public void getLogoShopSuccess(Bitmap result) {
+                    final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(result,60,60,false));
                     final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
 
-
-                    MainThread.run(new Runnable() {
-                        @Override
-                        public void run() {
-                            Log.v("ADDMARKER", "Pasamos por ADDMarker");
-                            googleMapobject.addMarker(new MarkerOptions().
-                                    position(position).title(shop.getName()).icon(bitmapDescriptor));
-                        }
-                    });
-
-                }
-
-                @Override
-                public void onBitmapFailed(Drawable errorDrawable) {
-                    LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
                     googleMapobject.addMarker(new MarkerOptions().
-                            position(position).title(shop.getName()));
-
+                            position(position).title(shop.getName()).icon(bitmapDescriptor));
 
                 }
 
                 @Override
-                public void onPrepareLoad(Drawable placeHolderDrawable) {
+                public void getLogoShopDidFail() {
 
                 }
             });
 
-            LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
 
-            googleMapobject.addMarker(new MarkerOptions().
-                    position(position).title(shop.getName()));
+
+//            Picasso.with(getApplicationContext()).load(shop.getLogoImgUrl()).into(new Target() {
+//
+//
+//                    @Override
+//                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
+//                    Log.v("ONBITMAPLOADED","Pasamos por BITMAP");
+//                    bitmapMap[0] = bitmap;
+//                    final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap,60,60,false));
+//                    final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
+//
+//
+//                    MainThread.run(new Runnable() {
+//                        @Override
+//                        public void run() {
+//                            Log.v("ADDMARKER", "Pasamos por ADDMarker");
+//                            googleMapobject.addMarker(new MarkerOptions().
+//                                    position(position).title(shop.getName()).icon(bitmapDescriptor));
+//                        }
+//                    });
+//
+//                }
+//
+//                @Override
+//                public void onBitmapFailed(Drawable errorDrawable) {
+//                    LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
+//                    googleMapobject.addMarker(new MarkerOptions().
+//                            position(position).title(shop.getName()));
+//
+//
+//                }
+//
+//                @Override
+//                public void onPrepareLoad(Drawable placeHolderDrawable) {
+//
+//                }
+//            });
+//
+//            LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
+//
+//            googleMapobject.addMarker(new MarkerOptions().
+//                    position(position).title(shop.getName()));
 
 
 

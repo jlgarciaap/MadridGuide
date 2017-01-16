@@ -3,6 +3,9 @@ package es.styleapps.madridguide.interactors;
 import android.content.Context;
 import android.os.Looper;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import es.styleapps.madridguide.manager.db.ShopDAO;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
@@ -18,11 +21,29 @@ public class CacheAllShopsInteractor {
             public void run() {
                 ShopDAO dao = new ShopDAO(context);
 
+                List<Shop> shopDatabase = dao.query();
+
                 boolean success = true;
+
                 for (Shop shop: shops.allShops()) {
-                    success = dao.insert(shop) > 0;
-                    if (!success) {
-                        break;
+                    boolean inDB = false;
+
+                    if (shopDatabase != null && !shopDatabase.isEmpty()){
+                        for (Shop shopDB:shopDatabase) {
+                            // comprobamos si la tienda ya esta en BD
+                            if (shop.getName().equalsIgnoreCase(shopDB.getName())){
+                                inDB = true;
+                                break;
+                            }
+                        }
+                    }
+
+                    if(!inDB){
+                        success = dao.insert(shop) > 0;
+
+                        if (!success) {
+                            break;
+                        }
                     }
                 }
 
