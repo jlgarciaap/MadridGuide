@@ -33,9 +33,11 @@ public class CacheAllShopsInteractor {
                         for (Shop shopDB:shopDatabase) {
                             // comprobamos si la tienda ya esta en BD
                            // if (shop.getName().equalsIgnoreCase(shopDB.getName())){
-                            if(shop.getId() == shopDB.getId() ||
-                                    (System.currentTimeMillis() - shopDB.getDateInsert() < 7)){
+                            if(shop.getId() == shopDB.getId()){
 
+//                                if(shop.getId() == shopDB.getId() ||
+//                                        (System.currentTimeMillis() - shopDB.getDateInsert() < 7)){
+//
                                 //Realmente tendria que ser un update. Convertir en integer
 
                                 inDB = true;

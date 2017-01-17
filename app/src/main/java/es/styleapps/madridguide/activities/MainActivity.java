@@ -30,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
         setupShopsButton();
 
 
+
+
     }
 
     private void setupShopsButton() {

@@ -92,8 +92,6 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
     }
 
     private void addShopsInMap(Shops shops) {
-        final Bitmap[] bitmapMap = new Bitmap[1];
-        final MarkerOptions marker;
         shopList = shops.allShops();
         NetworkManager networkManager = new NetworkManager(getApplicationContext());
 
@@ -115,52 +113,6 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
 
                 }
             });
-
-
-
-//            Picasso.with(getApplicationContext()).load(shop.getLogoImgUrl()).into(new Target() {
-//
-//
-//                    @Override
-//                public void onBitmapLoaded(Bitmap bitmap, Picasso.LoadedFrom from) {
-//                    Log.v("ONBITMAPLOADED","Pasamos por BITMAP");
-//                    bitmapMap[0] = bitmap;
-//                    final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(bitmap,60,60,false));
-//                    final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
-//
-//
-//                    MainThread.run(new Runnable() {
-//                        @Override
-//                        public void run() {
-//                            Log.v("ADDMARKER", "Pasamos por ADDMarker");
-//                            googleMapobject.addMarker(new MarkerOptions().
-//                                    position(position).title(shop.getName()).icon(bitmapDescriptor));
-//                        }
-//                    });
-//
-//                }
-//
-//                @Override
-//                public void onBitmapFailed(Drawable errorDrawable) {
-//                    LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
-//                    googleMapobject.addMarker(new MarkerOptions().
-//                            position(position).title(shop.getName()));
-//
-//
-//                }
-//
-//                @Override
-//                public void onPrepareLoad(Drawable placeHolderDrawable) {
-//
-//                }
-//            });
-//
-//            LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
-//
-//            googleMapobject.addMarker(new MarkerOptions().
-//                    position(position).title(shop.getName()));
-
-
 
         }
     }
