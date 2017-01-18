@@ -30,14 +30,9 @@ public class GetAllShopsInteractor {
         ShopDAO dao = new ShopDAO(context);
         boolean daoData = false;
 
-            if (dao.query() != null){
-                if (!dao.query().isEmpty()){
+        daoData = isDaoData(dao);
 
-                    daoData = true;
-                }
-            }
-
-            if (actualDate - dateInPref > Constants.SEVENDAYS || !daoData  || dateInPref == actualDate) {
+        if (actualDate - dateInPref > Constants.SEVENDAYS || !daoData  || dateInPref == actualDate) {
 
                 dao.deleteAll();
                 NetworkManager networkManager = new NetworkManager(context);
@@ -73,5 +68,16 @@ public class GetAllShopsInteractor {
 
             }
 
+    }
+
+    private boolean isDaoData(ShopDAO dao) {
+
+        if (dao.query() != null){
+            if (!dao.query().isEmpty()){
+
+                return  true;
+            }
+        }
+        return false;
     }
 }
