@@ -50,17 +50,12 @@ public class GetAllShopsInteractor {
                             response.response(Shops.build(shops));
 
                         }
-//
+
                         SharedPreferences dateSaved = context.getSharedPreferences(PREFS_NAME, 0);
                         SharedPreferences.Editor editor = dateSaved.edit();
                         editor.putLong(PREFS_NAME, new Date().getTime());
                         editor.commit();
 
-//                //TODO actualizar cache cada 7 dias para que no descargue y grabe siempre que descargue
-//                ShopDAO dao = new ShopDAO(getApplicationContext());
-//                for (Shop shop : shops) {
-//                    dao.insert(shop);
-//                }
                     }
 
                     @Override
@@ -70,7 +65,6 @@ public class GetAllShopsInteractor {
                 });
 
             } else {
-                //Si es mayor de siete dias borramos  y descagamos de nuevo
 
                 List<Shop> shopsList = dao.query();
                 if (response != null) {
