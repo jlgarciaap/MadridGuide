@@ -30,11 +30,11 @@ public class GetAllShopsInteractor {
         ShopDAO dao = new ShopDAO(context);
         boolean daoData = false;
 
-        daoData = isDaoData(dao);
+        //daoData = isDaoData(dao);
 
         if (actualDate - dateInPref > Constants.SEVENDAYS || !daoData  || dateInPref == actualDate) {
 
-                dao.deleteAll();
+                //dao.deleteAll();
                 NetworkManager networkManager = new NetworkManager(context);
                 networkManager.getShopsFromServer(new NetworkManager.GetShopListener() {
                     @Override

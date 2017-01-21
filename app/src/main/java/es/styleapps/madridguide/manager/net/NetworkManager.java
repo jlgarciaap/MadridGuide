@@ -24,6 +24,7 @@ import java.net.URL;
 import java.util.List;
 
 import es.styleapps.madridguide.R;
+import es.styleapps.madridguide.util.TypeEntity;
 
 /**
  * Created by jlgarciaap on 14/1/17.
@@ -55,7 +56,17 @@ public class NetworkManager {
     public void getShopsFromServer(final GetShopListener listener){
 
         RequestQueue queue = Volley.newRequestQueue(context.get());
-        String url = context.get().getString(R.string.shopsUrl);
+        String url = "";
+        if (TypeEntity.getType() == "shop") {
+
+            url = context.get().getString(R.string.shops_url);
+
+        } else if (TypeEntity.getType() == "activity"){
+
+            url = context.get().getString(R.string.shopsUrl);
+
+        }
+
 
         StringRequest request = new StringRequest(url, new Response.Listener<String>() {
             @Override

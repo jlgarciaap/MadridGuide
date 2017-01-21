@@ -21,6 +21,9 @@ public class DBConstants {
     public static final String KEY_SHOP_LATITUDE = "latitude";
     public static final String KEY_SHOP_LONGITUDE = "longitude";
 
+    public static final String KEY_SHOP_TYPE = "type";
+
+
     public static final String[] ALL_COLUMNS = {
             KEY_SHOP_ID,
             KEY_SHOP_NAME,
@@ -31,13 +34,14 @@ public class DBConstants {
             KEY_SHOP_DESCRIPTION,
             KEY_SHOP_LATITUDE,
             KEY_SHOP_LONGITUDE,
+            KEY_SHOP_TYPE
 
     };
 
     public static final String SQL_SCRIPT_CREATE_SHOP_TABLE =
             "create table " + TABLE_SHOP
                     + "( "
-                    + KEY_SHOP_ID + " integer primary key, "
+                    + KEY_SHOP_ID + " integer, "
                     + KEY_SHOP_NAME + " text not null,"
                     + KEY_SHOP_IMAGE_URL + " text, "
                     + KEY_SHOP_LOGO_IMAGE_URL + " text, "
@@ -45,7 +49,9 @@ public class DBConstants {
                     + KEY_SHOP_URL + " text,"
                     + KEY_SHOP_LATITUDE + " real,"
                     + KEY_SHOP_LONGITUDE + " real, "
-                    + KEY_SHOP_DESCRIPTION + " text "
+                    + KEY_SHOP_DESCRIPTION + " text,"
+                    + KEY_SHOP_TYPE + " text,"
+                    + "primary key (" + KEY_SHOP_ID + ", " + KEY_SHOP_TYPE + ")"
                     + ");";
 
     //KEY_SHOP_ID + " integer primary key autoincrement, "

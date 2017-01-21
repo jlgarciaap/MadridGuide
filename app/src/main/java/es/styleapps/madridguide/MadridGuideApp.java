@@ -31,29 +31,17 @@ public class MadridGuideApp extends Application {
     private static WeakReference<Context> appContext;
 
 
+
     @Override
     public void onCreate() {
         super.onCreate();
 
         appContext = new WeakReference<Context>(getApplicationContext());
 
-       // insertTestData();
+
        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
         Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
-
-        new GetAllShopsInteractor().execute(getApplicationContext(),
-                new GetAllShopsInteractor.GetAllShopsInteractorResponse() {
-            @Override
-            public void response(Shops shops) {
-                new CacheAllShopsInteractor().execute(getApplicationContext(), shops,
-                        new CacheAllShopsInteractor.CacheAllShopsInteractorResponse() {
-                    @Override
-                    public void response(boolean success) {
-                        //TODO lo suyo es bajar todo lo de la aplicacion o segun necesidad?Las imagenes?
-                    }
-                });
-            }
-        });
+      //insertTestData()
 
 
     }

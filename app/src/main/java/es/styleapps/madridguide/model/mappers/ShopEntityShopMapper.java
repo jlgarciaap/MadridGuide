@@ -26,7 +26,6 @@ public class ShopEntityShopMapper {
             shop.setLongitude(entity.getLongitude());
             shop.setImageUrl(entity.getImg());
             shop.setAddress(entity.getAddress());
-            shop.setDateInsert(System.currentTimeMillis());
             //..
 
             result.add(shop);

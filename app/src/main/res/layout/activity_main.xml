@@ -18,5 +18,13 @@
         android:layout_centerHorizontal="true"
         android:text="@string/activity_man_shops_button_text"/>
 
+    <Button
+        android:id="@+id/activity_main_activities_button"
+        android:layout_width="@dimen/activity_main_shops_button_width"
+        android:layout_height="@dimen/activity_main_shops_button_width"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:text="@string/activity_man_activities_button_text"/>
+
 
 </RelativeLayout>

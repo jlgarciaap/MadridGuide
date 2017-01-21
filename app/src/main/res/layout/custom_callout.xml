@@ -10,6 +10,6 @@
         android:id="@+id/custom_callout_logo"/>
     <TextView
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-
+        android:layout_height="match_parent"
+        android:id="@+id/custom_callout_text"/>
 </LinearLayout>

@@ -1,6 +1,7 @@
 <resources>
     <string name="app_name">MadridGuide</string>
-    <string name="activity_man_shops_button_text">Activities</string>
+    <string name="activity_man_shops_button_text">Shops</string>
+    <string name="activity_man_activities_button_text">Activities</string>
 
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>

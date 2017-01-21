@@ -11,6 +11,8 @@ import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -29,9 +31,11 @@ import java.io.IOException;
 import java.util.List;
 
 import es.styleapps.madridguide.R;
+import es.styleapps.madridguide.adapter.calloutAdapter;
 import es.styleapps.madridguide.fragments.ShopsFragment;
 import es.styleapps.madridguide.interactors.GetAllShopsFromLocalCacheInteractor;
 import es.styleapps.madridguide.interactors.MainThread;
+import es.styleapps.madridguide.manager.db.ShopDAO;
 import es.styleapps.madridguide.manager.net.NetworkManager;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
@@ -45,6 +49,7 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
     private MapFragment mapFragment;
     private GoogleMap googleMapobject;
     private List<Shop> shopList;
+
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -87,32 +92,21 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
             }
         });
 
+
         mapFragment.getMapAsync(this);
+
 
     }
 
     private void addShopsInMap(Shops shops) {
         shopList = shops.allShops();
-        NetworkManager networkManager = new NetworkManager(getApplicationContext());
 
         for (final Shop shop : shopList) {
 
-            networkManager.getBitmapFromShop(shop.getLogoImgUrl(), new NetworkManager.GetLogoShopListener() {
-                @Override
-                public void getLogoShopSuccess(Bitmap result) {
-                    final BitmapDescriptor bitmapDescriptor = BitmapDescriptorFactory.fromBitmap(Bitmap.createScaledBitmap(result,60,60,false));
-                    final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
+            final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());
 
-                    googleMapobject.addMarker(new MarkerOptions().
-                            position(position).title(shop.getName()).icon(bitmapDescriptor));
-
-                }
-
-                @Override
-                public void getLogoShopDidFail() {
-
-                }
-            });
+            googleMapobject.addMarker(new MarkerOptions().
+                            position(position).snippet(shop.getLogoImgUrl())).setTitle(shop.getName());
 
         }
     }
@@ -131,6 +125,7 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
         googleMapobject.moveCamera(center);
         googleMapobject.animateCamera(zoom);
 
+        googleMapobject.setInfoWindowAdapter(new calloutAdapter(getApplicationContext()));
 
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
             return;
@@ -138,8 +133,19 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
             googleMapobject.setMyLocationEnabled(true);
             googleMapobject.getUiSettings().setMyLocationButtonEnabled(true);
 
-    }
 
+        googleMapobject.setOnInfoWindowClickListener(new GoogleMap.OnInfoWindowClickListener() {
+            @Override
+            public void onInfoWindowClick(Marker marker) {
+
+                ShopDAO dao = new ShopDAO(getApplicationContext());
+                  Shop shop =  dao.query(marker.getTitle());
+
+                Navigator.navigateFromShopsActivityToDetailShopsActivity(shop,ShopsActivity.this);
+            }
+        });
+
+    }
 
 
 }

@@ -13,6 +13,7 @@ import java.util.List;
 
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
+import es.styleapps.madridguide.util.TypeEntity;
 
 import static es.styleapps.madridguide.manager.db.DBConstants.ALL_COLUMNS;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_ADDRESS;
@@ -23,6 +24,7 @@ import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_LATITUDE;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_LOGO_IMAGE_URL;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_LONGITUDE;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_NAME;
+import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_TYPE;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_URL;
 import static es.styleapps.madridguide.manager.db.DBConstants.TABLE_SHOP;
 
@@ -30,6 +32,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
     private WeakReference<Context> context;
     private DBHelper dbHelper;
     private SQLiteDatabase db;
+
 
     public ShopDAO(Context context, DBHelper dbHelper) {
         this.context = new WeakReference<Context>(context);
@@ -79,7 +82,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
             return contentValues;
 
         }
-        //TODO Mapear aqui el ID
+
         contentValues.put(KEY_SHOP_ID, shop.getId());
         contentValues.put(KEY_SHOP_ADDRESS, shop.getAddress());
         contentValues.put(KEY_SHOP_DESCRIPTION, shop.getDescription());
@@ -89,11 +92,12 @@ public class ShopDAO implements DAOPersistable<Shop> {
         contentValues.put(KEY_SHOP_LONGITUDE, shop.getLongitude());
         contentValues.put(KEY_SHOP_NAME, shop.getName());
         contentValues.put(KEY_SHOP_URL, shop.getUrl());
+        contentValues.put(KEY_SHOP_TYPE, TypeEntity.getType());
 
         return contentValues;
     }
 
-    //TODO extraer y enriquecer esto con el ID?
+
     public static @NonNull Shop getShopFromContentValues(final @NonNull ContentValues contentValues){
 
         final Shop shop = new Shop(1,"");
@@ -114,11 +118,22 @@ public class ShopDAO implements DAOPersistable<Shop> {
     @Override
     public void update(long id, @NonNull Shop data) {
 
+        if (data != null) {
+
+            db.beginTransaction();  //Siempre tenemos que empezar la transaccion y luego terminarla con el endtransaction
+            try { // Null Column Hack
+                db.update(TABLE_SHOP,this.getContentValues(data),KEY_SHOP_ID + " = " + id + " AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'",null);
+                db.setTransactionSuccessful();  // COMMIT. Si la transaccion va bien si no hacemos rollback.(se haria en el end// )
+            } finally {
+                db.endTransaction();
+            }
+        }
+
     }
 
     @Override
     public int delete(long id) {
-        return db.delete(TABLE_SHOP, KEY_SHOP_ID + " = " + id, null);  // 1st way
+        return db.delete(TABLE_SHOP, KEY_SHOP_ID + " = " + id + " AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null);  // 1st way
         // db.delete(TABLE_SHOP, KEY_SHOP_ID + " = ?", new String[]{ "" + id });  // 2nd way
         //db.delete(TABLE_SHOP, KEY_SHOP_ID + " = ? AND " + KEY_SHOP_NAME + "= ?" ,
         //        new String[]{ "" + id, "pepito" });  // 2nd way
@@ -134,7 +149,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
     @Override
     public Cursor queryCursor() {
         //Cursor es como un array pero se trae las cosas en lotes para no sobrecargar memoria
-        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, null, null, null, null, KEY_SHOP_ID);
+        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
         if (c != null && c.getCount() > 0) {
             c.moveToFirst();
         }
@@ -143,7 +158,21 @@ public class ShopDAO implements DAOPersistable<Shop> {
 
     @Override
     public @Nullable Shop query(final long id) {
-        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_ID + " = " + id, null, null, null, KEY_SHOP_ID);
+        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_ID + " = " + id + " AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
+
+        if (c != null && c.getCount() == 1) {
+            c.moveToFirst();
+        } else {
+            return null;
+        }
+
+        Shop shop = getShop(c);
+
+        return shop;
+    }
+
+    public @Nullable Shop query(final String name) {
+        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_NAME + " = '" + name + "' AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
 
         if (c != null && c.getCount() == 1) {
             c.moveToFirst();
@@ -195,7 +224,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
 
     public Cursor queryCursor(long id) {
 
-        Cursor c = db.query(TABLE_SHOP,ALL_COLUMNS, "ID = "+id,null,null,null,KEY_SHOP_ID);
+        Cursor c = db.query(TABLE_SHOP,ALL_COLUMNS, "ID = " + id + " AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType()+"'",null,null,null,KEY_SHOP_ID);
         if( c!= null && c.getCount() > 0){
 
             c.moveToFirst();
