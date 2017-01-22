@@ -20,7 +20,7 @@
 
     <Button
         android:id="@+id/activity_main_activities_button"
-        android:layout_width="@dimen/activity_main_shops_button_width"
+        android:layout_width="wrap_content"
         android:layout_height="@dimen/activity_main_shops_button_width"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"

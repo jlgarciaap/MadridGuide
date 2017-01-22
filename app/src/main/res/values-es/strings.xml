@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">MadridGuide</string>
+    <string name="activity_man_shops_button_text">Tiendas</string>
+    <string name="activity_man_activities_button_text">Actividades</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="title_activity_maps">Map</string>
+    <string name="search_hint">Buscar</string>
+    <string name="network_alert">¿Es tu primera vez? Pobrecito..Lo siento sin red, data = null, si no es la primera puedes continuar pero los datos pueden no estar actualizados</string>
+</resources>

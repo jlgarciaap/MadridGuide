@@ -18,6 +18,7 @@ import es.styleapps.madridguide.util.TypeEntity;
 import static es.styleapps.madridguide.manager.db.DBConstants.ALL_COLUMNS;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_ADDRESS;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_DESCRIPTION;
+import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_DESCRIPTION_EN;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_ID;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_IMAGE_URL;
 import static es.styleapps.madridguide.manager.db.DBConstants.KEY_SHOP_LATITUDE;
@@ -86,6 +87,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
         contentValues.put(KEY_SHOP_ID, shop.getId());
         contentValues.put(KEY_SHOP_ADDRESS, shop.getAddress());
         contentValues.put(KEY_SHOP_DESCRIPTION, shop.getDescription());
+        contentValues.put(KEY_SHOP_DESCRIPTION_EN, shop.getDescriptionEn());
         contentValues.put(KEY_SHOP_IMAGE_URL, shop.getImageUrl());
         contentValues.put(KEY_SHOP_LOGO_IMAGE_URL, shop.getLogoImgUrl());
         contentValues.put(KEY_SHOP_LATITUDE, shop.getLatitude());
@@ -106,6 +108,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
         shop.setName(contentValues.getAsString(KEY_SHOP_NAME));
         shop.setAddress(contentValues.getAsString(KEY_SHOP_ADDRESS));
         shop.setDescription(contentValues.getAsString(KEY_SHOP_DESCRIPTION));
+        shop.setDescriptionEn(contentValues.getAsString(KEY_SHOP_DESCRIPTION_EN));
         shop.setImageUrl(contentValues.getAsString(KEY_SHOP_IMAGE_URL));
         shop.setLogoImgUrl(contentValues.getAsString(KEY_SHOP_LOGO_IMAGE_URL));
         shop.setUrl(contentValues.getAsString(KEY_SHOP_URL));
@@ -156,6 +159,16 @@ public class ShopDAO implements DAOPersistable<Shop> {
         return c;
     }
 
+    public Cursor queryCursor(final String search) {
+        //Cursor es como un array pero se trae las cosas en lotes para no sobrecargar memoria
+        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_NAME + "  LIKE  '%" +search + "%' AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
+        if (c != null && c.getCount() > 0) {
+            c.moveToFirst();
+        }
+        return c;
+    }
+
+
     @Override
     public @Nullable Shop query(final long id) {
         Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_ID + " = " + id + " AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
@@ -185,6 +198,21 @@ public class ShopDAO implements DAOPersistable<Shop> {
         return shop;
     }
 
+    public @Nullable Shop searchQuery(final String name) {
+        Cursor c = db.query(TABLE_SHOP, ALL_COLUMNS, KEY_SHOP_NAME + " LIKE '%" + name + "%' AND " + KEY_SHOP_TYPE + " = '" + TypeEntity.getType() + "'", null, null, null, KEY_SHOP_ID);
+
+        if (c != null && c.getCount() == 1) {
+            c.moveToFirst();
+        } else {
+            return null;
+        }
+
+        Shop shop = getShop(c);
+
+        return shop;
+    }
+
+
     @NonNull
     public static Shop getShop(Cursor c) {
         long identifier = c.getLong(c.getColumnIndex(KEY_SHOP_ID));
@@ -194,6 +222,7 @@ public class ShopDAO implements DAOPersistable<Shop> {
 
         shop.setAddress(c.getString(c.getColumnIndex(KEY_SHOP_ADDRESS)));
         shop.setDescription(c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION)));
+        shop.setDescriptionEn(c.getString(c.getColumnIndex(KEY_SHOP_DESCRIPTION_EN)));
         shop.setImageUrl(c.getString(c.getColumnIndex(KEY_SHOP_IMAGE_URL)));
         shop.setLogoImgUrl(c.getString(c.getColumnIndex(KEY_SHOP_LOGO_IMAGE_URL)));
         shop.setLatitude(c.getFloat(c.getColumnIndex(KEY_SHOP_LATITUDE)));
@@ -206,6 +235,25 @@ public class ShopDAO implements DAOPersistable<Shop> {
     @Override
     public List<Shop> query() {
         Cursor c = queryCursor();
+
+        if (c == null || !c.moveToFirst()) {
+            return null;
+        }
+
+        List<Shop> shops = new LinkedList<>();
+
+        c.moveToFirst();
+        do {
+            Shop shop = getShop(c);
+            shops.add(shop);
+        } while (c.moveToNext());
+
+        return shops;
+    }
+
+
+    public List<Shop> querySearch(final String search) {
+        Cursor c = queryCursor(search);
 
         if (c == null || !c.moveToFirst()) {
             return null;

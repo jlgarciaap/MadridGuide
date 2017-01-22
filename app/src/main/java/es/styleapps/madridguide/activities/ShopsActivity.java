@@ -1,42 +1,34 @@
 package es.styleapps.madridguide.activities;
 
 import android.Manifest;
+import android.app.SearchManager;
+import android.content.Context;
 import android.content.pm.PackageManager;
-import android.graphics.Bitmap;
-import android.graphics.drawable.Drawable;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.ActivityCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
+import android.support.v7.widget.SearchView;
+import android.view.Menu;
+import android.view.MenuInflater;
 
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.model.BitmapDescriptor;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
-import com.squareup.picasso.Picasso;
-import com.squareup.picasso.Target;
 
-import java.io.IOException;
 import java.util.List;
 
 import es.styleapps.madridguide.R;
 import es.styleapps.madridguide.adapter.calloutAdapter;
 import es.styleapps.madridguide.fragments.ShopsFragment;
 import es.styleapps.madridguide.interactors.GetAllShopsFromLocalCacheInteractor;
-import es.styleapps.madridguide.interactors.MainThread;
 import es.styleapps.madridguide.manager.db.ShopDAO;
-import es.styleapps.madridguide.manager.net.NetworkManager;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
 import es.styleapps.madridguide.navigator.Navigator;
@@ -98,9 +90,71 @@ public class ShopsActivity extends AppCompatActivity implements OnMapReadyCallba
 
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.options_menu, menu);
+
+        // Associate searchable configuration with the SearchView
+        SearchManager searchManager =
+                (SearchManager) getSystemService(Context.SEARCH_SERVICE);
+        SearchView searchView =
+                (SearchView) menu.findItem(R.id.search).getActionView();
+        searchView.setSearchableInfo(
+                searchManager.getSearchableInfo(getComponentName()));
+
+        searchShops(searchView);
+
+        return true;
+
+
+    }
+
+    private void searchShops(SearchView searchView) {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                ShopDAO dao = new ShopDAO(getApplicationContext());
+                List<Shop> shopsList =dao.querySearch(query);
+                Shops shops = Shops.build(shopsList);
+                shopsFragment.setShops(shops);
+                addShopsInMap(shops);
+
+                return false;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                if (newText.length() < 1){
+                    ShopDAO dao = new ShopDAO(getApplicationContext());
+                    List<Shop> shopsList =dao.query();
+                    Shops shops = Shops.build(shopsList);
+                    shopsFragment.setShops(shops);
+                    addShopsInMap(shops);
+
+                } else if (newText.length() > 2){
+                    ShopDAO dao = new ShopDAO(getApplicationContext());
+                    List<Shop> shopsList =dao.querySearch(newText);
+                    Shops shops = Shops.build(shopsList);
+                    shopsFragment.setShops(shops);
+                    addShopsInMap(shops);
+
+                    return false;
+
+                }
+
+                return false;
+            }
+        });
+    }
+
     private void addShopsInMap(Shops shops) {
         shopList = shops.allShops();
 
+        if (googleMapobject != null) {
+            googleMapobject.clear();
+        }
         for (final Shop shop : shopList) {
 
             final LatLng position = new LatLng(shop.getLatitude(), shop.getLongitude());

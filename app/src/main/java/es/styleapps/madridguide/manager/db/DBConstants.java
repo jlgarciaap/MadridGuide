@@ -17,6 +17,7 @@ public class DBConstants {
     public static final String KEY_SHOP_ADDRESS = "ADDRESS";
     public static final String KEY_SHOP_URL = "URL";
     public static final String KEY_SHOP_DESCRIPTION = "DESCRIPTION";
+    public static final String KEY_SHOP_DESCRIPTION_EN= "DESCRIPTION_EN";
 
     public static final String KEY_SHOP_LATITUDE = "latitude";
     public static final String KEY_SHOP_LONGITUDE = "longitude";
@@ -32,6 +33,7 @@ public class DBConstants {
             KEY_SHOP_ADDRESS,
             KEY_SHOP_URL,
             KEY_SHOP_DESCRIPTION,
+            KEY_SHOP_DESCRIPTION_EN,
             KEY_SHOP_LATITUDE,
             KEY_SHOP_LONGITUDE,
             KEY_SHOP_TYPE
@@ -50,6 +52,7 @@ public class DBConstants {
                     + KEY_SHOP_LATITUDE + " real,"
                     + KEY_SHOP_LONGITUDE + " real, "
                     + KEY_SHOP_DESCRIPTION + " text,"
+                    + KEY_SHOP_DESCRIPTION_EN + " text,"
                     + KEY_SHOP_TYPE + " text,"
                     + "primary key (" + KEY_SHOP_ID + ", " + KEY_SHOP_TYPE + ")"
                     + ");";

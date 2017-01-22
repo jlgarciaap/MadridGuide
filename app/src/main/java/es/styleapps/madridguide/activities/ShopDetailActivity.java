@@ -1,8 +1,8 @@
 package es.styleapps.madridguide.activities;
 
 import android.content.Intent;
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.method.ScrollingMovementMethod;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -13,16 +13,14 @@ import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
-
-import java.io.Serializable;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import es.styleapps.madridguide.R;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.util.Constants;
+import es.styleapps.madridguide.util.Language;
 
 public class ShopDetailActivity extends AppCompatActivity implements OnMapReadyCallback {
 
@@ -58,7 +56,14 @@ public class ShopDetailActivity extends AppCompatActivity implements OnMapReadyC
         nameText.setText(shop.getName());
         Picasso.with(this).load(shop.getLogoImgUrl()).into(logoImage);
         addressText.setText(shop.getAddress());
-        descriptionText.setText(shop.getDescription());
+
+        if (Language.getLanguage() == "es") {
+
+            descriptionText.setText(shop.getDescription());
+        } else {
+
+            descriptionText.setText(shop.getDescriptionEn());
+        }
         descriptionText.setMovementMethod(new ScrollingMovementMethod());
     }
 

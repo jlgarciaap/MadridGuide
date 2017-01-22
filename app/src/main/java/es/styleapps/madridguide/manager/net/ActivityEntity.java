@@ -16,6 +16,7 @@ public class ActivityEntity {
     @SerializedName("address") private String address;
     @SerializedName("url") private String url;
     @SerializedName("description_es") private String descriptionEs;
+    @SerializedName("description_en") private String descriptionEn;
     @SerializedName("gps_lat") private float latitude;
     @SerializedName("gps_lon") private float longitude;
 

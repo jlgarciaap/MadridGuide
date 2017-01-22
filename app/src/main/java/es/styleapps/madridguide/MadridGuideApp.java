@@ -7,6 +7,7 @@ import com.squareup.picasso.Picasso;
 
 import java.lang.ref.WeakReference;
 import java.util.List;
+import java.util.Locale;
 
 import es.styleapps.madridguide.interactors.CacheAllShopsInteractor;
 import es.styleapps.madridguide.interactors.GetAllShopsInteractor;
@@ -16,6 +17,7 @@ import es.styleapps.madridguide.manager.net.ShopEntity;
 import es.styleapps.madridguide.model.Shop;
 import es.styleapps.madridguide.model.Shops;
 import es.styleapps.madridguide.model.mappers.ShopEntityShopMapper;
+import es.styleapps.madridguide.util.Language;
 
 /**
  * Created by jlgarciaap on 9/1/17.
@@ -38,6 +40,7 @@ public class MadridGuideApp extends Application {
 
         appContext = new WeakReference<Context>(getApplicationContext());
 
+        Language.setLanguage(Locale.getDefault().getLanguage());
 
        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
         Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);

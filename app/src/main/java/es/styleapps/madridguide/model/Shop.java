@@ -14,6 +14,10 @@ public class Shop implements Serializable{
     private String address;
     private String url;
     private String description;
+
+
+
+    private String descriptionEn;
     private float latitude;
     private float longitude;
 
@@ -87,6 +91,15 @@ public class Shop implements Serializable{
     public Shop setDescription(String description) {
         this.description = description;
         return this;
+    }
+
+    public String getDescriptionEn() {
+        return descriptionEn;
+    }
+
+    public Shop setDescriptionEn(String descriptionEn) {
+        this.descriptionEn = descriptionEn;
+        return  this;
     }
 
     public float getLatitude() {

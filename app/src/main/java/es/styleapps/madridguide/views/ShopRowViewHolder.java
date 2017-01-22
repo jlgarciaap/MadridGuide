@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.squareup.picasso.NetworkPolicy;
+import com.squareup.picasso.OkHttpDownloader;
 import com.squareup.picasso.Picasso;
 import com.squareup.picasso.Target;
 
@@ -56,8 +58,9 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
         }
         nameTextView.setText(shop.getName());
 
+
         Picasso.with(context.get()).load(shop.getLogoImgUrl()).fetch();
-        Picasso.with(context.get()).load(shop.getLogoImgUrl())
+        Picasso.with(context.get()).load(shop.getLogoImgUrl()).networkPolicy(NetworkPolicy.OFFLINE)
                 .placeholder(android.R.drawable.ic_dialog_email)
                 .into(logoImageView);
 
