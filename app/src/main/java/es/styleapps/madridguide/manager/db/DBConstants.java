@@ -57,7 +57,6 @@ public class DBConstants {
                     + "primary key (" + KEY_SHOP_ID + ", " + KEY_SHOP_TYPE + ")"
                     + ");";
 
-    //KEY_SHOP_ID + " integer primary key autoincrement, "
     public static final String DROP_DATABASE_SCRIPTS = "";
 
     public static final String[] CREATE_DATABASE_SCRIPTS = {

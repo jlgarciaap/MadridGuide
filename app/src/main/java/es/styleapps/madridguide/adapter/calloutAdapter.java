@@ -28,9 +28,6 @@ public class calloutAdapter implements GoogleMap.InfoWindowAdapter {
 
     }
 
-
-
-
     @Override
     public View getInfoWindow(Marker marker) {
 

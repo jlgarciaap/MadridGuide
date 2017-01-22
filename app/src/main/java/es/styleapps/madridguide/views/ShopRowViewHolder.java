@@ -39,25 +39,23 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
     public ShopRowViewHolder(View itemView) {
         super(itemView);
 
-
         context = new WeakReference<Context>(itemView.getContext());
         nameTextView = (TextView) itemView.findViewById(R.id.row_shop_name);
-      logoImageView = (ImageView) itemView.findViewById(R.id.row_shop_logo);
-      backgroundImageView = (ImageView) itemView.findViewById(R.id.row_shop_background);
-
+        logoImageView = (ImageView) itemView.findViewById(R.id.row_shop_logo);
+        backgroundImageView = (ImageView) itemView.findViewById(R.id.row_shop_background);
 
 
     }
 
-    public void setShop (Shop shop){
+    public void setShop(Shop shop) {
 
-        if(shop == null){
+        if (shop == null) {
 
             return;
 
         }
-        nameTextView.setText(shop.getName());
 
+        nameTextView.setText(shop.getName());
 
         Picasso.with(context.get()).load(shop.getLogoImgUrl()).fetch();
         Picasso.with(context.get()).load(shop.getLogoImgUrl()).networkPolicy(NetworkPolicy.OFFLINE)
@@ -68,8 +66,6 @@ public class ShopRowViewHolder extends RecyclerView.ViewHolder {
                 .placeholder(android.R.drawable.ic_dialog_email)
                 .into(backgroundImageView);
 
-
     }
-
 
 }

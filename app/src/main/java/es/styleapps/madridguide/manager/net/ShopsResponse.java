@@ -9,7 +9,7 @@ import java.util.List;
  */
 
 public class ShopsResponse {
-    //Lo convertimos en una listea de ShopEntitys
+    //Lo convertimos en una lista de ShopEntitys
     @SerializedName("result")
     List<ShopEntity> result;
 

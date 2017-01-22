@@ -14,10 +14,12 @@ public class Shops implements IShopsIterable, IShopsUpdatable {
     List<Shop> shops;
 
     //Nos creamos nuestros metodos al estilo constructor porque estos no se heredan y es mejor asin
-    public static @NonNull Shops build(@NonNull final List<Shop> shopList){
+    public static
+    @NonNull
+    Shops build(@NonNull final List<Shop> shopList) {
         Shops shops = new Shops(shopList);
 
-        if(shopList == null){
+        if (shopList == null) {
 
             shops.shops = new ArrayList<>();
 
@@ -26,9 +28,11 @@ public class Shops implements IShopsIterable, IShopsUpdatable {
         return shops;
     }
 
-    public static @NonNull Shops build(){
+    public static
+    @NonNull
+    Shops build() {
 
-        return  build(null); //Pasamos null para hacer una lista vacia con el metodo superior
+        return build(null); //Pasamos null para hacer una lista vacia con el metodo superior
 
     }
 
@@ -50,7 +54,7 @@ public class Shops implements IShopsIterable, IShopsUpdatable {
 
     @Override
     public Shop get(long index) {
-        return shops.get((int)index);
+        return shops.get((int) index);
     }
 
     @Override
@@ -74,7 +78,7 @@ public class Shops implements IShopsIterable, IShopsUpdatable {
     @Override
     public void edit(Shop newShop, long index) {
 
-        shops.set((int)index, newShop);
+        shops.set((int) index, newShop);
 
     }
 }

@@ -35,25 +35,27 @@ public class NetworkManager {
     //Interfaz que usamos para devolver los datos y usarlos fuera del networkmanager
     public interface GetShopListener {
         public void getShopEntitiesSuccess(List<ShopEntity> result);
+
         public void getShopEntitiesDidFail();
 
     }
 
     public interface GetLogoShopListener {
         public void getLogoShopSuccess(Bitmap result);
+
         public void getLogoShopDidFail();
 
 
     }
 
-    public NetworkManager( Context context) {
+    public NetworkManager(Context context) {
         this.context = new WeakReference<>(context);
     }
 
     static WeakReference<Context> context;
 
     //Le pasamos el listener para devolver los datos
-    public void getShopsFromServer(final GetShopListener listener){
+    public void getShopsFromServer(final GetShopListener listener) {
 
         RequestQueue queue = Volley.newRequestQueue(context.get());
         String url = "";
@@ -61,7 +63,7 @@ public class NetworkManager {
 
             url = context.get().getString(R.string.shops_url);
 
-        } else if (TypeEntity.getType() == "activity"){
+        } else if (TypeEntity.getType() == "activity") {
 
             url = context.get().getString(R.string.shopsUrl);
 
@@ -73,7 +75,7 @@ public class NetworkManager {
             public void onResponse(String response) { //Si va bien sale esto
 
                 Log.d("JSON", response);
-              List<ShopEntity> shopResponse = parseResponse(response);
+                List<ShopEntity> shopResponse = parseResponse(response);
                 //Usamos esto para devolver, ya que se produce en otro hilo o tarde mucho y si devolvemos
                 //en el mismo metodo devolveria siempre null antes de terminar
                 if (listener != null) {
@@ -96,7 +98,7 @@ public class NetworkManager {
     }
 
     //Devolvemos una lista con lo descargado parseado
-    private  List<ShopEntity> parseResponse(String response) {
+    private List<ShopEntity> parseResponse(String response) {
         List<ShopEntity> result = null;
         try {
             //Pasamos un reader a GsonBuilder y lo aplique a la entidad que hemos creado
@@ -105,15 +107,16 @@ public class NetworkManager {
             ShopsResponse shopsResponse = gson.fromJson(reader, ShopsResponse.class);
             result = shopsResponse.result;
 
-        }catch(Exception e){
+        } catch (Exception e) {
 
             e.printStackTrace();
-        };
+        }
+        ;
 
         return result;
     }
 
-    public void getBitmapFromShop(final String urlLogo,final GetLogoShopListener listener){
+    public void getBitmapFromShop(final String urlLogo, final GetLogoShopListener listener) {
 
         RequestQueue queue = Volley.newRequestQueue(context.get());
         String url = urlLogo;
@@ -121,7 +124,7 @@ public class NetworkManager {
         ImageRequest imageRequest = new ImageRequest(url, new Response.Listener<Bitmap>() {
             @Override
             public void onResponse(Bitmap response) {
-                if (listener !=  null){
+                if (listener != null) {
 
                     listener.getLogoShopSuccess(response);
                 }
@@ -130,7 +133,7 @@ public class NetworkManager {
         }, 0, 0, null, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                if (listener != null){
+                if (listener != null) {
                     listener.getLogoShopDidFail();
                 }
             }
@@ -139,7 +142,6 @@ public class NetworkManager {
         queue.add(imageRequest);
 
     }
-
 
 
 }

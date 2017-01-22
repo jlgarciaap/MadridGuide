@@ -33,7 +33,6 @@ public class MadridGuideApp extends Application {
     private static WeakReference<Context> appContext;
 
 
-
     @Override
     public void onCreate() {
         super.onCreate();
@@ -42,9 +41,9 @@ public class MadridGuideApp extends Application {
 
         Language.setLanguage(Locale.getDefault().getLanguage());
 
-       Picasso.with(getApplicationContext()).setLoggingEnabled(true);
+        Picasso.with(getApplicationContext()).setLoggingEnabled(true);
         Picasso.with(getApplicationContext()).setIndicatorsEnabled(true);
-      //insertTestData()
+        //insertTestData()
 
 
     }

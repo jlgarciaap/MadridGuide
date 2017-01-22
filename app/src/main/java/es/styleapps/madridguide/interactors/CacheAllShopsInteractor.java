@@ -26,14 +26,14 @@ public class CacheAllShopsInteractor {
 
                 boolean success = true;
 
-                for (Shop shop: shops.allShops()) {
+                for (Shop shop : shops.allShops()) {
 
                     boolean inDB = false;
-                    if (shopDatabase != null && !shopDatabase.isEmpty()){
-                        for (Shop shopDB:shopDatabase) {
+                    if (shopDatabase != null && !shopDatabase.isEmpty()) {
+                        for (Shop shopDB : shopDatabase) {
                             // comprobamos si la tienda ya esta en BD
 
-                            if(shop.getId() == shopDB.getId()){
+                            if (shop.getId() == shopDB.getId()) {
 
                                 inDB = true;
                                 break;
@@ -41,7 +41,7 @@ public class CacheAllShopsInteractor {
                         }
                     }
 
-                    if(!inDB){
+                    if (!inDB) {
                         success = dao.insert(shop) > 0;
 
                         if (!success) {

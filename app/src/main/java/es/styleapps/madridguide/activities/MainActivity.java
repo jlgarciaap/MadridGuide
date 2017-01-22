@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
 
     private boolean isConnected() {
         ConnectivityManager cm =
-                (ConnectivityManager)getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
+                (ConnectivityManager) getApplicationContext().getSystemService(Context.CONNECTIVITY_SERVICE);
 
         NetworkInfo activeNetwork = cm.getActiveNetworkInfo();
         return activeNetwork.isConnectedOrConnecting();
@@ -62,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
-               TypeEntity.setType("shop");
+                TypeEntity.setType("shop");
 
                 getDataNowAndShowMeTheInfo();
 
@@ -85,19 +85,19 @@ public class MainActivity extends AppCompatActivity {
         activitiesButton.setOnClickListener(listener);
     }
 
-    private AlertDialog network(){
+    private AlertDialog network() {
 
-       AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
+        AlertDialog.Builder builder = new AlertDialog.Builder(MainActivity.this);
 
         builder.setTitle("UPSS NO NETWORK").setMessage(R.string.network_alert)
                 .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
                         final String PREFS_NAME = "dateSaved";
-                        SharedPreferences dateSaved = getApplicationContext().getSharedPreferences(PREFS_NAME,0);
+                        SharedPreferences dateSaved = getApplicationContext().getSharedPreferences(PREFS_NAME, 0);
                         long actualDate = new Date().getTime();
-                        long dateInPref = dateSaved.getLong(PREFS_NAME,actualDate);
-                        if(dateInPref != actualDate){
+                        long dateInPref = dateSaved.getLong(PREFS_NAME, actualDate);
+                        if (dateInPref != actualDate) {
                             navigateTime();
                         }
                     }
@@ -118,7 +118,7 @@ public class MainActivity extends AppCompatActivity {
         }
     }
 
-    private void navigateTime(){
+    private void navigateTime() {
 
         new GetAllShopsInteractor().execute(getApplicationContext(),
                 new GetAllShopsInteractor.GetAllShopsInteractorResponse() {

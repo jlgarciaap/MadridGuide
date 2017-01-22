@@ -14,9 +14,6 @@ public class Shop implements Serializable{
     private String address;
     private String url;
     private String description;
-
-
-
     private String descriptionEn;
     private float latitude;
     private float longitude;
