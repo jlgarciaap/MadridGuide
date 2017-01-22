@@ -2,4 +2,4 @@
 
 Guia de actividades en Madrid
 
-Lo que me ha dado tiempo en 1 dia. Hacer actividades y jugar con los mapas. Tengo un problema con el mapa que no quiere actualizar la vista segun recibe tengo que salir y entrar en el mapa para que me añada las localizaciones.
+Creo que falta alguna cosilla y seguro que se pueden mejorar bastantes cosas, pero no me da tiempo a mas jejejjeje. Por cierto tengo un problema con el mapa, a la hora de aparecer el callout tengo que entrar pulsar 2 veces sobre el para que se vea el icono y no he podido solucionarlo todavia.
